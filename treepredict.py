@@ -245,8 +245,9 @@ def buildtree(rows,gain_increment,gain_threshold,instance_minimum,scoref=entropy
         best_gain=gain
         best_criteria=(col,value)
         best_sets=(set1,set2)
+        best_setslen=(len(set1),len(set2))
   # Create the sub branches   
-  if best_gain>gain_threshold and len(set1)+len(set2)>instance_minimum:
+  if best_gain>gain_threshold and bestsetslen[0]+bestsetslen[1]>instance_minimum:
 #    print best_gain, best_criteria[0], best_criteria[1]
     gain_threshold=gainthreshold+gain_increment
     trueBranch=buildtree(best_sets[0], gain_increment, gain_threshold, instance_minimum)
