@@ -1,12 +1,15 @@
 #!/usr/bin/python
-#
+import sys
+sys.path.append('/usr/local/cellar/pil/1.1.7/lib/python2.7/site-packages/PIL/')
+
 # Script to demonstrate the CART-like DT classifier from
 # Chapter 7 of "Programming Collective Intelligence" by
 # T. Segaran, O'Reilly, (c) 2007
 #
 import treepredict
 import fileinput
-
+import Image
+import ImageDraw
 
 train_data, test_data = fileinput.loadDataset(1)
 

@@ -105,7 +105,7 @@ def getdepth(tree):
   return max(getdepth(tree.tb),getdepth(tree.fb))+1
 
 
-from PIL import Image,ImageDraw
+#from PIL import Image,ImageDraw
 
 def drawtree(tree,jpeg='tree.jpg'):
   w=getwidth(tree)*100
@@ -217,7 +217,7 @@ def variance(rows):
   variance=sum([(d-mean)**2 for d in data])/len(data)
   return variance
 
-def buildtree(rows,gain_threshold=0,scoref=entropy):
+def buildtree(rows,gain_increment,gain_threshold,instance_minimum,scoref=entropy):
   if len(rows)==0: return decisionnode()
   current_score=scoref(rows)
 
@@ -246,10 +246,11 @@ def buildtree(rows,gain_threshold=0,scoref=entropy):
         best_criteria=(col,value)
         best_sets=(set1,set2)
   # Create the sub branches   
-  if best_gain>gain_threshold:
+  if best_gain>gain_threshold and len(set1)+len(set2)>instance_minimum:
 #    print best_gain, best_criteria[0], best_criteria[1]
-    trueBranch=buildtree(best_sets[0])
-    falseBranch=buildtree(best_sets[1])
+    gain_threshold=gainthreshold+gain_increment
+    trueBranch=buildtree(best_sets[0], gain_increment, gain_threshold, instance_minimum)
+    falseBranch=buildtree(best_sets[1], gain_increment, gain_threshold, instance_minimum)
     return decisionnode(col=best_criteria[0],value=best_criteria[1],
                         tb=trueBranch,fb=falseBranch)
   else:
