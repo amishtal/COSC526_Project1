@@ -87,24 +87,28 @@ def replaceIDs(dataIn,userDict,movieDict):
 def cleanmoviedata(listIn):
     
     listOut = listIn[1:]
+    """
     for n in range(0,19):
             if flag[3+n] == 1:
                     listout.append(listIn[5+n])
-#    newList.extend(dataIn[5:24])
+    """
+    newList.extend(dataIn[5:24])
     return listOut
 
 
 def cleanuserdata(listIn):
 
     listOut = []
-    #listOut.append(int(listIn[1]))
-    #listOut.extend(listIn[2:])
+    listOut.append(int(listIn[1]))
+    listOut.extend(listIn[2:])
+    """
     if flag[0] == 1:
             listOut.append(int(listIn[1]))
     if flag[1] == 1:
             listOut.append(listIn[2])
     if flag[2] == 1:
             listOut.append(listIn[3])
+    """
     return listOut
 
 
