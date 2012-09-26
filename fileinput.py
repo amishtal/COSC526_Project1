@@ -1,3 +1,35 @@
+#flag=[age, gender, occupation, zip code, action, adventure, animation, children's, comedy, crime,
+#documentary, drama, fantasy, film-noir, horror, musical, mystery, romance, sci-fi,
+#thriller, war, western, rating]
+lenflag=0
+flag = [1, # Age
+        0, # Gender
+        0, # Occupation
+        0, # Zip Code
+        0, # Title
+        0, # Release Date
+        0, # Unknown (always blank)
+        0, # URL
+        0, # Unknown (a genre)
+        0, # Action
+        0, # Adventure
+        0, # Animation
+        0, # Children's
+        0, # Comedy
+        0, # Crime
+        0, # Documentary
+        0, # Drama
+        0, # Fantasy
+        0, # Film-noir
+        0, # Horror
+        0, # Musical
+        0, # Mystery
+        0, # Romance
+        0, # Sci-fi
+        0, # Thriller
+        0, # War
+        0, # Western
+        1] # Rating
 
 def readfiles(fname,splitter):
 
@@ -14,7 +46,7 @@ def readfiles(fname,splitter):
     return data
 
 
-def createDictionary(dataIn,cleanfun):
+def createDictionary(dataIn, cleanfun):
 
     dictionary={}
 
@@ -28,8 +60,15 @@ def createDictionary(dataIn,cleanfun):
 
     return dictionary
 
- 
-def replaceIDs(dataIn,dictIn,dictIn2):
+
+def listFilter(listIn):
+    def f(x):
+        return x[1]
+
+    return [x[0] for x in filter(f, zip(listIn, flag))]
+
+
+def replaceIDs(dataIn,userDict,movieDict):
 
     dataOut=[]
     for row in dataIn:
@@ -37,27 +76,27 @@ def replaceIDs(dataIn,dictIn,dictIn2):
         movieID=row[1]
         rating=row[2]    
         newList = []
-        newList.extend(dictIn[userID])
-        newList.extend(dictIn2[movieID])
+        newList.extend(userDict[userID])
+        newList.extend(movieDict[movieID])
         newList.append(rating)
-        dataOut.append(newList)
+        dataOut.append(listFilter(newList))
 
     return dataOut
 
 
-def cleanmoviedata(dataIn):
+def cleanmoviedata(listIn):
     
-    newList = []
-    newList.extend(dataIn[5:24])
-    return newList
+    listOut = listIn[1:]
+#    newList.extend(dataIn[5:24])
+    return listOut
 
 
-def cleanuserdata(dataIn):
+def cleanuserdata(listIn):
 
-    newList = []
-    newList.append(int(dataIn[1]))
-    newList.extend(dataIn[2:4])
-    return newList
+    listOut = []
+    listOut.append(int(listIn[1]))
+    listOut.extend(listIn[2:])
+    return listOut
 
 
 def loadDataset(num):
@@ -67,11 +106,14 @@ def loadDataset(num):
     movielist = readfiles('MovieLens/u.item','|')
     userlist  = readfiles('MovieLens/u.user','|')
 
-    moviedictionary = createDictionary(movielist,cleanmoviedata)
-    userdictionary  = createDictionary(userlist,cleanuserdata)
+    moviedictionary = createDictionary(movielist, cleanmoviedata)
+    userdictionary  = createDictionary(userlist, cleanuserdata)
 
-    return replaceIDs(trainbase,userdictionary,moviedictionary), \
-           replaceIDs(testbase,userdictionary,moviedictionary)
+    trainSet = replaceIDs(trainbase, userdictionary, moviedictionary)
+    testSet = replaceIDs(testbase, userdictionary, moviedictionary)
+
+    return trainSet, testSet
+           
              
 
 # Read in the file to turn into lists of lists.
