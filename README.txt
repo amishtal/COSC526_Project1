@@ -20,7 +20,7 @@ We found that this strategy improves classification rates of the test data.  We 
 u1: 1e-05
 u2: 0
 u3: 0
-u4: 1e-05
+u4: 0
 u5: 0.01
 
 
