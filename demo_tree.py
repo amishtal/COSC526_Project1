@@ -13,22 +13,27 @@ import ImageDraw
 
 
 # If the last parameter is set to 0, then all attributes other than 'age' and 'war' would be used.
-train_data, test_data = fileinput.loadDataset(1, ['age','war'], 1)
+train_data, test_data = fileinput.loadDataset(1, ['age', 'fantasy','film-noir', 'horror', 'western'], 1)
 
 tree=treepredict.buildtree(train_data, gain_threshold=0)
 
+trainConfMat, crTrain = treepredict.testTree(train_data, tree)
+print 'Training set confusion matrix (Classification rate:', crTrain,'):'
+for row in trainConfMat:
+  print '\t'.join(map(lambda x:str(x), row))
 
-for row in test_data:
-    actual    = row[-1]
-#    print row
-    predicted = treepredict.classify(row, tree)
-    
+print ''
 
-    print 'Actual:', actual, 'Predicted:', predicted
+testConfMat, crTest  = treepredict.testTree(test_data,  tree)
+print 'Test set confusion matrix (Classification rate:', crTest,'):'
+for row in testConfMat:
+  print '\t'.join(map(lambda x:str(x), row))
+
+print ''
 
 # Let's see what it looks like...
 #print "\nFinal tree...\n"
-treepredict.printtree(tree)
+#treepredict.printtree(tree)
 
 # Produce a png of the tree
 #treepredict.drawtree(tree,jpeg="sample_tree.jpg")

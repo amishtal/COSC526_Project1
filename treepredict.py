@@ -9,6 +9,8 @@
 # This simple dataset reflects user behaviour and a final purchase decision
 # for a website.
 
+import random
+
 class decisionnode:
   def __init__(self,col=-1,value=None,results=None,tb=None,fb=None):
     self.col=col
@@ -186,6 +188,15 @@ def prune(tree,mingain):
       tree.tb,tree.fb=None,None
       tree.results=uniquecounts(tb+fb)
 
+
+def resultToPrediction(result):
+  maxValue = max([x[1] for x in result.items()])
+
+  predictions = [x[0] for x in filter(lambda x: x[1] == maxValue, result.items())]
+
+  return random.choice(predictions)
+
+
 def mdclassify(observation,tree):
   if tree.results!=None:
     return tree.results
@@ -209,6 +220,31 @@ def mdclassify(observation,tree):
         if v==tree.value: branch=tree.tb
         else: branch=tree.fb
       return mdclassify(observation,branch)
+
+
+def testTree(observations, tree):
+  def inc_elem(matrix, row, col):
+    matrix[row][col] = matrix[row][col] + 1
+
+  confusionMatrix = [[0]*5 for i in range(5)]
+
+  for observation in observations:
+    result = mdclassify(observation, tree)
+
+    actualClassIndex = int(observation[-1])-1
+    predictedClassIndex = int(resultToPrediction(result))-1
+
+#    confusionMatrix = inc_elem(confusionMatrix, actualClassIndex, predictedClassIndex)
+    actual=actualClassIndex
+    predicted=predictedClassIndex
+    confusionMatrix[actual][predicted] = confusionMatrix[actual][predicted] + 1
+
+  classificationRate = sum([confusionMatrix[idx[0]][idx[1]] for idx in zip(range(5), range(5))])
+  classificationRate = float(classificationRate) / sum(map(sum, confusionMatrix))
+
+
+  return confusionMatrix, classificationRate
+
 
 def variance(rows):
   if len(rows)==0: return 0
