@@ -120,6 +120,8 @@ def listFilter(listIn, keepList):
 
 def replaceIDs(dataIn,userDict,movieDict, attributeFlags):
 
+    ratingDict = {'1':'1', '2':'1', '3':'1', '4':'2', '5':'3'}
+
     dataOut=[]
     for row in dataIn:
         userID=row[0]
@@ -128,7 +130,7 @@ def replaceIDs(dataIn,userDict,movieDict, attributeFlags):
         newList = []
         newList.extend(userDict[userID])
         newList.extend(movieDict[movieID])
-        newList.append(rating)
+        newList.append(ratingDict(rating))
         dataOut.append(listFilter(newList, attributeFlags))
 
     return dataOut
