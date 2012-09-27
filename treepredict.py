@@ -235,7 +235,7 @@ def testTree(observations, tree):
     predicted=predictedClassIndex
     confusionMatrix[actual][predicted] = confusionMatrix[actual][predicted] + 1
 
-  classificationRate = sum([confusionMatri2[idx[0]][idx[1]] for idx in zip(range(2), range(2))])
+  classificationRate = sum([confusionMatrix[idx[0]][idx[1]] for idx in zip(range(2), range(2))])
   classificationRate = float(classificationRate) / sum(map(sum, confusionMatrix))
 
   return confusionMatrix, classificationRate
