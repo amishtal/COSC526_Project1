@@ -16,12 +16,17 @@ import ImageDraw
 
 train_data, test_data = fileinput.loadDataset(5, ['age', 'fantasy','film-noir', 'horror', 'western'], 1)
 
-tree=treepredict.buildtree(train_data,gain_increment=increment,gain_threshold=0,instance_minimum=1)
 
-trainConfMat, crTrain = treepredict.testTree(train_data, tree)
-print 'Training set confusion matrix (Classification rate:', crTrain,'):'
-for row in trainConfMat:
-    print '\t'.join(map(lambda x:str(x), row))
+def testing_gain_increments(increments=[]):
+  classresults={}
+  
+  for increment in increments:
+    tree=treepredict.buildtree(train_data,gain_increment=increment,gain_threshold=0,instance_minimum=1)
+
+    trainConfMat, crTrain = treepredict.testTree(train_data, tree)
+    print 'Training set confusion matrix (Classification rate:', crTrain,'):'
+    for row in trainConfMat:
+      print '\t'.join(map(lambda x:str(x), row))
 
     print ''
   
@@ -31,8 +36,25 @@ for row in trainConfMat:
       print '\t'.join(map(lambda x:str(x), row))
 
     print ''
+
     
-    
+    classresults[increment]=[crTest]
+
+  return classresults
+
+increments=[0]
+
+for i in xrange(1,10):
+  x=10**(-i)
+  increments.append(x)
+
+print 'Increments to be tested and passed to gain_increments',increments
+accuracyTest=testing_gain_increments(increments)
+#print accuracyTest
+values=accuracyTest.keys()
+values.sort(cmp=lambda a,b:cmp(accuracyTest[a],accuracyTest[b]))
+print 'Increment value with best classification rate was ',values[-1]
+
 # Let's see what it looks like...
 #print "\nFinal tree...\n"
 treepredict.printtree(treepredict.buildtree(train_data,gain_increment=values[-1],gain_threshold=0,instance_minimum=1))
