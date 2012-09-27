@@ -92,7 +92,7 @@ def readfiles(fname,splitter):
     fileIn = open(fname, 'r')
     data=[map(f,line.split(splitter)) for line in fileIn]
     fileIn.close()
-    print 'There are '+ str(len(data))+ ' records'
+#    print 'There are '+ str(len(data))+ ' records'
     return data
 
 
@@ -105,7 +105,7 @@ def createDictionary(dataIn, cleanfun):
         dictionary[str(i+1)] = cleanfun(dataIn[i])
         i+=1
     
-    print 'Dictionary has ' + str(len(dictionary)) + ' items.'
+#    print 'Dictionary has ' + str(len(dictionary)) + ' items.'
     
 
     return dictionary
@@ -149,6 +149,13 @@ def cleanuserdata(listIn):
 
 
 def loadDataset(num, attributes=[], keep=0):
+    print 'Loading dataset', num
+    if keep:
+        print '  Keeping attributes', attributes
+    else:
+        print '  Ignoring attributes', attributes
+    print ''
+
     attributeFlags = createAttributeFlags(attributes, keep)
 
     trainbase = readfiles('MovieLens/u' + str(num) + '.base', '\t')
