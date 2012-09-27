@@ -21,7 +21,7 @@ u1: 1e-05
 u2: 0
 u3: 0
 u4: 0
-u5: 0.01
+u5: 0
 
 
 2) Early termination via minimum number of instances in best sets:
