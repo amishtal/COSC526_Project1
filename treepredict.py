@@ -267,7 +267,7 @@ def buildtree(rows,
   best_gain=0.0
   best_criteria=None
   best_sets=None
-  bestsetslen=(0,0)
+  best_setslen=(0,0)
   
   column_count=len(rows[0])-1
   for col in range(0,column_count):
@@ -290,7 +290,7 @@ def buildtree(rows,
         best_sets=(set1,set2)
         best_setslen=(len(set1),len(set2))
   # Create the sub branches   
-  if best_gain>gain_threshold and bestsetslen[0]+bestsetslen[1]>=instance_minimum:
+  if best_gain>gain_threshold and best_setslen[0]+best_setslen[1]>=instance_minimum:
 #    print best_gain, best_criteria[0], best_criteria[1]
     gain_threshold=gain_threshold+gain_increment
     trueBranch=buildtree(best_sets[0], gain_increment, gain_threshold, instance_minimum)
