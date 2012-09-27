@@ -11,9 +11,11 @@ import fileinput
 import Image
 import ImageDraw
 
-train_data, test_data = fileinput.loadDataset(1)
 
-tree=treepredict.buildtree(train_data, gain_threshold=0.009)
+# If the last parameter is set to 0, then all attributes other than 'age' and 'war' would be used.
+train_data, test_data = fileinput.loadDataset(1, ['age','war'], 1)
+
+tree=treepredict.buildtree(train_data, gain_threshold=0)
 
 
 for row in test_data:

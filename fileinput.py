@@ -2,34 +2,84 @@
 #documentary, drama, fantasy, film-noir, horror, musical, mystery, romance, sci-fi,
 #thriller, war, western, rating]
 lenflag=0
-flag = [1, # Age
-        0, # Gender
-        0, # Occupation
-        0, # Zip Code
-        0, # Title
-        0, # Release Date
-        0, # Unknown (always blank)
-        0, # URL
-        0, # Unknown (a genre)
-        0, # Action
-        0, # Adventure
-        0, # Animation
-        0, # Children's
-        0, # Comedy
-        0, # Crime
-        0, # Documentary
-        0, # Drama
-        0, # Fantasy
-        0, # Film-noir
-        0, # Horror
-        0, # Musical
-        0, # Mystery
-        0, # Romance
-        0, # Sci-fi
-        0, # Thriller
-        0, # War
-        0, # Western
-        1] # Rating
+
+
+# Takes a list of attribute names and a flag (0 or 1).
+# If the flag is set (== 1) then the given attributes
+# will be set to 1 in the returned list and all others
+# will be set to 0. Otherwise, the given attributes will
+# be set to zero and all others to 1. An exception is
+# that the last attribute (rating) will always be set to
+# one
+
+attributeDict = {
+  'age'           : 0,
+  'gender'        : 1,
+  'occupation'    : 2,
+  'zip code'      : 3,
+  'title'         : 4,
+  'release date'  : 5,
+  'unknown'       : 6,
+  'url'           : 7, 
+  'unknown genre' : 8,
+  'action'        : 9,
+  'adventure'     :10,
+  'animation'     :11,
+  'childrens'     :12,
+  'comedy'        :13,
+  'crime'         :14,
+  'documentary'   :15,
+  'drama'         :16,
+  'fantasy'       :17,
+  'film-noir'     :18,
+  'horror'        :19,
+  'musical'       :20,
+  'mystery'       :21,
+  'romance'       :22,
+  'sci-fi'        :23,
+  'thriller'      :24,
+  'war'           :25,
+  'western'       :26,
+  'rating'        :27
+}
+
+def createAttributeFlags(attributeList, keep):
+    flags= [not keep, # Age
+            not keep, # Gender
+            not keep, # Occupation
+            not keep, # Zip Code
+            not keep, # Title
+            not keep, # Release Date
+            not keep, # Unknown (always blank)
+            not keep, # URL
+            not keep, # Unknown (a genre)
+            not keep, # Action
+            not keep, # Adventure
+            not keep, # Animation
+            not keep, # Children's
+            not keep, # Comedy
+            not keep, # Crime
+            not keep, # Documentary
+            not keep, # Drama
+            not keep, # Fantasy
+            not keep, # Film-noir
+            not keep, # Horror
+            not keep, # Musical
+            not keep, # Mystery
+            not keep, # Romance
+            not keep, # Sci-fi
+            not keep, # Thriller
+            not keep, # War
+            not keep, # Western
+            not keep] # Rating
+
+    for attribute in attributeList:
+        flags[ attributeDict[attribute.lower()] ] = keep
+
+    flags[-1] = 1
+
+    return flags
+
 
 def readfiles(fname,splitter):
 
@@ -61,14 +111,14 @@ def createDictionary(dataIn, cleanfun):
     return dictionary
 
 
-def listFilter(listIn):
+def listFilter(listIn, keepList):
     def f(x):
         return x[1]
 
-    return [x[0] for x in filter(f, zip(listIn, flag))]
+    return [x[0] for x in filter(f, zip(listIn, keepList))]
 
 
-def replaceIDs(dataIn,userDict,movieDict):
+def replaceIDs(dataIn,userDict,movieDict, attributeFlags):
 
     dataOut=[]
     for row in dataIn:
@@ -79,7 +129,7 @@ def replaceIDs(dataIn,userDict,movieDict):
         newList.extend(userDict[userID])
         newList.extend(movieDict[movieID])
         newList.append(rating)
-        dataOut.append(listFilter(newList))
+        dataOut.append(listFilter(newList, attributeFlags))
 
     return dataOut
 
@@ -98,7 +148,9 @@ def cleanuserdata(listIn):
     return listOut
 
 
-def loadDataset(num):
+def loadDataset(num, attributes=[], keep=0):
+    attributeFlags = createAttributeFlags(attributes, keep)
+
     trainbase = readfiles('MovieLens/u' + str(num) + '.base', '\t')
     testbase  = readfiles('MovieLens/u' + str(num) + '.test', '\t')
 
@@ -108,8 +160,8 @@ def loadDataset(num):
     moviedictionary = createDictionary(movielist, cleanmoviedata)
     userdictionary  = createDictionary(userlist, cleanuserdata)
 
-    trainSet = replaceIDs(trainbase, userdictionary, moviedictionary)
-    testSet = replaceIDs(testbase, userdictionary, moviedictionary)
+    trainSet = replaceIDs(trainbase, userdictionary, moviedictionary, attributeFlags)
+    testSet = replaceIDs(testbase, userdictionary, moviedictionary, attributeFlags)
 
     return trainSet, testSet
            
