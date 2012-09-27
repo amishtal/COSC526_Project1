@@ -223,7 +223,7 @@ def mdclassify(observation,tree):
 
 
 def testTree(observations, tree):
-  confusionMatrix = [[0]*5 for i in range(5)]
+  confusionMatrix = [[0]*2 for i in range(2)]
 
   for observation in observations:
     result = classify(observation, tree)
@@ -235,7 +235,7 @@ def testTree(observations, tree):
     predicted=predictedClassIndex
     confusionMatrix[actual][predicted] = confusionMatrix[actual][predicted] + 1
 
-  classificationRate = sum([confusionMatrix[idx[0]][idx[1]] for idx in zip(range(5), range(5))])
+  classificationRate = sum([confusionMatri2[idx[0]][idx[1]] for idx in zip(range(2), range(2))])
   classificationRate = float(classificationRate) / sum(map(sum, confusionMatrix))
 
   return confusionMatrix, classificationRate
