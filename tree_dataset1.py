@@ -16,7 +16,7 @@ import ImageDraw
 
 train_data, test_data = fileinput.loadDataset(1, ['age','gender','occupation','unknown genre','fantasy','film-noir', 'horror', 'western'], 1)
 
-tree=treepredict.buildtree(train_data,gain_increment=0,gain_threshold=0.00001,instance_minimum=1)
+tree=treepredict.buildtree(train_data,gain_increment=0,gain_threshold=0.00001,instance_minimum=0)
 
 trainConfMat, crTrain = treepredict.testTree(train_data, tree)
 print 'Training set confusion matrix (Classification rate:', crTrain,'):'
