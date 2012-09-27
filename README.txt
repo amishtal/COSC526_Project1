@@ -1,6 +1,8 @@
 Script Execution
+All datasets should be within a folder labeled MovieLens for organizational purposes
 
 Tree modification
+- implemented 2 stopping criteria explained in the "stopping criteria" section.
 
 Stopping Criteria
 1) Early termination via minimum threshold for gain:
@@ -11,6 +13,12 @@ This is to prevent the treebuilder from essentially splitting "hairs" and creati
 
 Justification
 
+
+Our initial pass through the datasets removed the following columns of values from consideration because they are nominal values unique for each instance in the data: timestamp, movie title, IMDb URL.  UserID and movieID were also excluded after mapping the information into one consolidated list of lists of user info, movie id and rating.
+ 
+We noticed entries in the movie information data were missing attribute values.  Some of these values were inconsequential as we planned to exclude those columns, but movie dates were missing as well.  We elected to exclude movie dates for all movies to forgo the challenge of trying to represent the missing values.
+
+Rating's compressed into 3 classes??? do we want to do this for sure?
 
 
 
