@@ -14,7 +14,7 @@ import ImageDraw
 
 # If the last parameter is set to 0, then all attributes other than 'age' and 'war' would be used.
 
-train_data, test_data = fileinput.loadDataset(4, ['age', 'fantasy','film-noir', 'horror', 'western'], 1)
+train_data, test_data = fileinput.loadDataset(4, ['age','gender','occupation','unknown genre','drama','film-noir', 'horror', 'western'], 1)
 
 tree=treepredict.buildtree(train_data,gain_increment=0,gain_threshold=0,instance_minimum=1)
 
