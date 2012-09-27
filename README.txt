@@ -27,8 +27,13 @@ We noticed entries in the movie information data were missing attribute values. 
 
 
 
+Usage of attributes
+
+Based on previous studies, some attributes are eliminated from the data set (however, information like movie title, URL, zip code, etc are still considered in the final attribute usage). By analyzing the distribution of the users' gender, age and the movies' genre according to ratings, We reached a conclusion: users' gender and age have different correlations with ratings in respect of different users, which indicate that they are helpful to distinguish the different user' characteristics. Furthermore, when it comes to genre, we thought it might be redundant if we use all those different genres. We found that for those total 18 genres, only several of them have the averaged ratings noticably different from the rest. Thus we might only have to manipulate those genres that are more instrumental to describe the characteristics of a movie. And actually it does help the performance of the decision trees.
+
+
 Contributions
-Liu Liu:
+Liu Liu: I conducted some analysis on attributes of the users and movies using python and MS EXCEL. Also I and Aaron worked on implementing the usage of the attributes in the fileinput script.
  
 Aaron Mishtal:
 
