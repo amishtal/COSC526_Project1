@@ -130,7 +130,7 @@ def replaceIDs(dataIn,userDict,movieDict, attributeFlags):
         newList = []
         newList.extend(userDict[userID])
         newList.extend(movieDict[movieID])
-        newList.append(ratingDict(rating))
+        newList.append(ratingDict[rating])
         dataOut.append(listFilter(newList, attributeFlags))
 
     return dataOut
