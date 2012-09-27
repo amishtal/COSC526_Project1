@@ -16,39 +16,33 @@ import ImageDraw
 
 train_data, test_data = fileinput.loadDataset(5, ['age', 'fantasy','film-noir', 'horror', 'western'], 1)
 
-tree=treepredict.buildtree(train_data,gain_increment=increment,gain_threshold=0,instance_minimum=1)
+tree=treepredict.buildtree(train_data,gain_increment=0,gain_threshold=0,instance_minimum=1)
 
 trainConfMat, crTrain = treepredict.testTree(train_data, tree)
 print 'Training set confusion matrix (Classification rate:', crTrain,'):'
 for row in trainConfMat:
     print '\t'.join(map(lambda x:str(x), row))
 
-    print ''
+print ''
   
-    testConfMat, crTest  = treepredict.testTree(test_data,  tree) 
-    print 'Test set confusion matrix (Classification rate:', crTest,'):'
-    for row in testConfMat:
-      print '\t'.join(map(lambda x:str(x), row))
 
-    print ''
+testConfMat, crTest  = treepredict.testTree(test_data,  tree) 
+print 'Test set confusion matrix (Classification rate:', crTest,'):'
+for row in testConfMat:
+    print '\t'.join(map(lambda x:str(x), row))
+
+print ''
     
     
 # Let's see what it looks like...
 #print "\nFinal tree...\n"
-treepredict.printtree(treepredict.buildtree(train_data,gain_increment=values[-1],gain_threshold=0,instance_minimum=1))
+#treepredict.printtree(tree)
+
 
 # Produce a png of the tree
+print '\nPrinting tree image...'
 treepredict.drawtree(tree,jpeg="sample_tree.jpg")
-#print "\npng of tree generated using PIL (Python Imaging Library) modules.\n"
 
-# Let's classify an incoming record of '(direct), USA, yes, 5' ...
-#incoming = ['(direct)','USA','yes',5]
-#print "Prediction of new record: ",treepredict.classify(incoming,tree)
-
-# Finally, what does pruning do with say a mingain = 0.9 ?
-#print "\nPruned tree...\n"
-#treepredict.prune(tree,0.9)
-#treepredict.printtree(tree)
 
 # For group homework, modify "buildtree" function so that it stops
 # when a threshold value on entropy is no longer satisfied. It should
