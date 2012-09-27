@@ -26,6 +26,12 @@ u5: 0
 
 2) Early termination via minimum number of instances in best sets:
 This is to prevent the treebuilder from essentially splitting "hairs" and creating nodes that are ill supported by the training data.  In the default provided scripts, the best sets were chosen without any consideration of how small or large the best sets were as long as they weren't empty.  A printout of best sets' lengths showed that these sets were sometimes only 1,2 instances each.  Any subbranch based on less than three instances is too negligible of a split when training upon 20,000 instances. The buildtree function was modified to accept an instance_minimum variable that will cause splitting to stop once the node has reached some minimum threshold determined by the user. The disadvantage of this approach is that forcing splitting to stop at a set threshold can lead to nodes with high entropy (poorly classified nodes).
+u1:
+u2:
+u3:
+u4:
+u5:100
+
 
 Justification:
 Our initial pass through the datasets removed the following columns of values from consideration because they are nominal values unique or almost unique for each instance in the data: zipcode, timestamp, movie title, IMDb URL.  UserID and movieID were also excluded after mapping the information into one consolidated list of lists of user info, movie id and rating.
