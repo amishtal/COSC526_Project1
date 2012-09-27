@@ -1,5 +1,11 @@
 Script Execution
-All datasets should be within a folder labeled MovieLens for organizational purposes
+
+User must decide on the minimum gain threshold, how the gain should increment with each level, and what the minimum number of instances that the algorithm should try to split.  These are passed to the buildtree function.
+-Flags for inclusion of attributes
+
+
+
+
 
 Tree modification
 - implemented 2 stopping criteria explained in the "stopping criteria" section.
@@ -18,7 +24,6 @@ Our initial pass through the datasets removed the following columns of values fr
  
 We noticed entries in the movie information data were missing attribute values.  Some of these values were inconsequential as we planned to exclude those columns, but movie dates were missing as well.  We elected to exclude movie dates for all movies to forgo the challenge of trying to represent the missing values.
 
-Rating's compressed into 3 classes??? do we want to do this for sure?
 
 
 
