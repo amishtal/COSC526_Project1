@@ -30,9 +30,13 @@ u5: 0.01
 This is to prevent the treebuilder from essentially splitting "hairs" and creating nodes that are ill supported by the training data.  In the default provided scripts, the best sets were chosen without any consideration of how small or large the best sets were as long as they weren't empty.  A printout of best sets' lengths showed that these sets were sometimes only 1,2 instances each.  Any subbranch based on less than three instances is too negligible of a split when training upon 20,000 instances. The buildtree function was modified to accept an instance_minimum variable that will cause splitting to stop once the node has reached some minimum threshold determined by the user. The disadvantage of this approach is that forcing splitting to stop at a set threshold can lead to nodes with high entropy (poorly classified nodes).
 
 Justification:
-Our initial pass through the datasets removed the following columns of values from consideration because they are nominal values unique for each instance in the data: timestamp, movie title, IMDb URL.  UserID and movieID were also excluded after mapping the information into one consolidated list of lists of user info, movie id and rating.
+Our initial pass through the datasets removed the following columns of values from consideration because they are nominal values unique or almost unique for each instance in the data: zipcode, timestamp, movie title, IMDb URL.  UserID and movieID were also excluded after mapping the information into one consolidated list of lists of user info, movie id and rating.
  
-We noticed entries in the movie information data were missing attribute values.  Some of these values were inconsequential as we planned to exclude those columns, but movie dates were missing as well.  We elected to exclude movie dates for all movies to forgo the challenge of trying to represent the missing values.
+We noticed entries in the movie information data were missing attribute values.  Some of these values were inconsequential as we planned to exclude those columns, but movie dates were missing as well.  We elected to exclude movie dates for all movies to forgo the challenge of trying to represent the missing values.  
+
+We binned the ratings from a 5-class problem to a 3-class one.  We combined ratings 1-3 into 1, 4 into 2 and 5 into 3.  This is justified because upon generating the confusion matrix, we observed that most of the training and test data was skewed towards a class rating of 4.  Therefore, simply predicting a rating of 4 would yield a classification rate of 0.34.  This is without the use of a tree.  Our 3-class change accounts for the fact that people probably really liked the movie if it was a 5 rating, 4 is a good movie, 3 and below means it was average or less.  The divide between 4 and 5 is interesting because it's the difference between a really good and simply just a good movie.  We saw a 2-fold differences in classification rates of the test data when we went from a 5 to 3 class decision tree.
+
+  
 
 
 
