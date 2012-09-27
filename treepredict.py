@@ -257,7 +257,7 @@ def variance(rows):
 def buildtree(rows,
               gain_increment=0,
               gain_threshold=0,
-              instance_minimum=0,
+              instance_minimum=2,
               scoref=entropy):
 
   if len(rows)==0: return decisionnode()
