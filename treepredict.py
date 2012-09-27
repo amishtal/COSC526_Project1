@@ -217,7 +217,13 @@ def variance(rows):
   variance=sum([(d-mean)**2 for d in data])/len(data)
   return variance
 
-def buildtree(rows,gain_increment,gain_threshold,instance_minimum,scoref=entropy):
+
+def buildtree(rows,
+              gain_increment=0,
+              gain_threshold=0,
+              instance_minimum=0,
+              scoref=entropy):
+
   if len(rows)==0: return decisionnode()
   current_score=scoref(rows)
 
