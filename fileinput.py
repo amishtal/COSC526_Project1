@@ -1,8 +1,9 @@
 #flag=[age, gender, occupation, zip code, action, adventure, animation, children's, comedy, crime,
 #documentary, drama, fantasy, film-noir, horror, musical, mystery, romance, sci-fi,
 #thriller, war, western, rating]
-lenflag=0
 
+# Path to datasets
+filepath = './MovieLens/'
 
 # Takes a list of attribute names and a flag (0 or 1).
 # If the flag is set (== 1) then the given attributes
@@ -160,11 +161,11 @@ def loadDataset(num, attributes=[], keep=0):
 
     attributeFlags = createAttributeFlags(attributes, keep)
 
-    trainbase = readfiles('MovieLens/u' + str(num) + '.base', '\t')
-    testbase  = readfiles('MovieLens/u' + str(num) + '.test', '\t')
+    trainbase = readfiles(filepath + 'u' + str(num) + '.base', '\t')
+    testbase  = readfiles(filepath + 'u' + str(num) + '.test', '\t')
 
-    movielist = readfiles('MovieLens/u.item','|')
-    userlist  = readfiles('MovieLens/u.user','|')
+    movielist = readfiles(filepath + 'u.item','|')
+    userlist  = readfiles(filepath + 'u.user','|')
 
     moviedictionary = createDictionary(movielist, cleanmoviedata)
     userdictionary  = createDictionary(userlist, cleanuserdata)
