@@ -3,10 +3,14 @@ Liu Liu, Aaron Mishtal, Hannah Woo
 Fall 2012
 
 Script Execution:
-User can control the minimum threshold for information gain, the amount that the minimum threshold will increase with each split, and the minimum number of instances that the algorithm should try to split.  These are passed to the buildtree function- gain_threshold, gain_increment, and instance_minimum.
+We have 5 files for demo_tree. 
+Denise, please set global attribute at the top of fileinput.py to the absolute path to your data set.
+
 
 Tree modification:
-- implemented 2 stopping criteria explained in the "stopping criteria" section.
+- fileinput.py will read in the training data and test data to create a list of lists with all attributes.
+- created an attribute filter to change what attributes are being passed to the build tree function for consideration
+- implemented 2 stopping criteria in buildtree explained in the "stopping criteria" section.
 
 Stopping Criteria:
 1) Early termination via minimum threshold for gain:
@@ -20,12 +24,6 @@ u4: 1e-05
 u5: 0.01
 
 
-
-
-
-
-
-
 2) Early termination via minimum number of instances in best sets:
 This is to prevent the treebuilder from essentially splitting "hairs" and creating nodes that are ill supported by the training data.  In the default provided scripts, the best sets were chosen without any consideration of how small or large the best sets were as long as they weren't empty.  A printout of best sets' lengths showed that these sets were sometimes only 1,2 instances each.  Any subbranch based on less than three instances is too negligible of a split when training upon 20,000 instances. The buildtree function was modified to accept an instance_minimum variable that will cause splitting to stop once the node has reached some minimum threshold determined by the user. The disadvantage of this approach is that forcing splitting to stop at a set threshold can lead to nodes with high entropy (poorly classified nodes).
 
@@ -34,21 +32,24 @@ Our initial pass through the datasets removed the following columns of values fr
  
 We noticed entries in the movie information data were missing attribute values.  Some of these values were inconsequential as we planned to exclude those columns, but movie dates were missing as well.  We elected to exclude movie dates for all movies to forgo the challenge of trying to represent the missing values.  
 
-We binned the ratings from a 5-class problem to a 3-class one.  We combined ratings 1-3 into 1, 4 into 2 and 5 into 3.  This is justified because upon generating the confusion matrix, we observed that most of the training and test data was skewed towards a class rating of 4.  Therefore, simply predicting a rating of 4 would yield a classification rate of 0.34.  This is without the use of a tree.  Our 3-class change accounts for the fact that people probably really liked the movie if it was a 5 rating, 4 is a good movie, 3 and below means it was average or less.  The divide between 4 and 5 is interesting because it's the difference between a really good and simply just a good movie.  We saw a 2-fold differences in classification rates of the test data when we went from a 5 to 3 class decision tree.
+We binned the ratings from a 5-class problem to a 2-class one, because we saw that most of the training and testing data was rating 4.  Therefore, guessing 4 for all instances led to ~30% classification rate.  Our 3-class decision tree immediately improved the classification rate.  However, we also tried a 2-class problem and found that provided the best classification rates at 60% .  This is 10% better than random guess of 50%, but more interestingly, it is better than a always guessing class 1(which is 54% of the total data for u1). This is better probabilities than the other larger class problems.   This is still a valuable classification because we find out with more confidence if a rating will be good or bad.  
 
-  
-
-
+When classifying the test data, we broke ties by choosing one the classes by random probability. 
 
 Usage of attributes
 
 Based on previous studies, some attributes are eliminated from the data set (however, information like movie title, URL, zip code, etc are still considered in the final attribute usage). By analyzing the distribution of the users' gender, age and the movies' genre according to ratings, We reached a conclusion: users' gender and age have different correlations with ratings in respect of different users, which indicate that they are helpful to distinguish the different user' characteristics. Furthermore, when it comes to genre, we thought it might be redundant if we use all those different genres. We found that for those total 18 genres, only several of them have the averaged ratings noticably different from the rest. Thus we might only have to manipulate those genres that are more instrumental to describe the characteristics of a movie. And actually it does help the performance of the decision trees.
+u1:
+u2:
+u3:
+u4:
+u5:
 
 
 Contributions
 Liu Liu: I conducted some analysis on attributes of the users and movies using python and MS EXCEL. Also I and Aaron worked on implementing the usage of the attributes in the fileinput script.
  
-Aaron Mishtal:
+Aaron Mishtal: The main coder and debugger
 
 Hannah Woo: I worked with Aaron to create fileinput script to consolidate the training and testing data with the movie and user information.  I added stopping criteria into the treepredict script and wrote the section describing those 2 strategies. 
 
