@@ -107,7 +107,7 @@ def getdepth(tree):
   return max(getdepth(tree.tb),getdepth(tree.fb))+1
 
 
-#from PIL import Image,ImageDraw
+from PIL import Image,ImageDraw
 
 def drawtree(tree,jpeg='tree.jpg'):
   w=getwidth(tree)*100
@@ -229,7 +229,7 @@ def testTree(observations, tree):
   confusionMatrix = [[0]*5 for i in range(5)]
 
   for observation in observations:
-    result = mdclassify(observation, tree)
+    result = classify(observation, tree)
 
     actualClassIndex = int(observation[-1])-1
     predictedClassIndex = int(resultToPrediction(result))-1
