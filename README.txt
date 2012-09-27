@@ -17,9 +17,9 @@ Stopping Criteria:
 Our group first attempted to implement an early termination strategy to our tree building function by adding a minimum threshold for the best gain.  In the default provided scripts, the best gain had to above 0.  We attempted to hard code some higher values such as 0.1.  However,  this modification immediately terminated tree building after the first iteration because the first split only has a gain of 0.009.  Hence, we opted to start the minimum threshold at 0 and increment this value by some small interval with each recursive call of the tree build function thereby increasing stringency of splitting with each treebuilding iteration. The disadvantage of a minimum threshold stems from the nature of a greedy algorithm where gain may reach a relative minimum and stop the treebuilding even though the subsequent splits could have led to very high gains.
 
 We found that this strategy improves classification rates of the test data.  We tested 10 different values between 0 and 10e-9 for the increment and found that using an incrementing minimum provided better classification rates than a fixed minimum threshold at 0 for all 5 test data sets. The best classification rates were provided by the following values for gain_increment.   
-u1: 0.001
-u2: 0.01
-u3: 0.0001 
+u1: 1e-05
+u2: 0
+u3: 0
 u4: 1e-05
 u5: 0.01
 
