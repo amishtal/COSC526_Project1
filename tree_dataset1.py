@@ -16,7 +16,11 @@ import ImageDraw
 
 train_data, test_data = fileinput.loadDataset(1, ['age','gender','occupation','unknown genre','fantasy','film-noir', 'horror', 'western'], 1)
 
-tree=treepredict.buildtree(train_data,gain_increment=0,gain_threshold=0.00001,instance_minimum=0)
+tree=treepredict.buildtree(train_data,gain_increment=1e-5,gain_threshold=0,instance_minimum=0)
+    
+# Let's see what it looks like...
+print "\nFinal tree...\n"
+treepredict.printtree(tree)
 
 trainConfMat, crTrain = treepredict.testTree(train_data, tree)
 print 'Training set confusion matrix (Classification rate:', crTrain,'):'
@@ -33,15 +37,11 @@ for row in testConfMat:
 
 print ''
     
-    
-# Let's see what it looks like...
-#print "\nFinal tree...\n"
-#treepredict.printtree(tree)
 
 
 # Produce a png of the tree
-print '\nPrinting tree image...'
-treepredict.drawtree(tree,jpeg="sample_tree.jpg")
+#print '\nPrinting tree image...'
+#treepredict.drawtree(tree,jpeg="sample_tree.jpg")
 
 
 # For group homework, modify "buildtree" function so that it stops
