@@ -3,9 +3,7 @@ Liu Liu, Aaron Mishtal, Hannah Woo
 Fall 2012
 
 Script Execution:
-We have 5 files for demo_tree. 
-Denise, please set global attribute at the top of fileinput.py to the absolute path to your data set.
-
+There are 5 files, tree_dataset1.py -- tree_dataset5.py, that generate trees for datasets 1 -- 5, respectively. In order for these scripts to run, the variable 'filepath' in fileinput.py must be set to the filepath of the folder containing the datasets. To build a tree for a particular dataset, just use Python to run one of the tree_datasetX.py files. This will also generate a .png file (hopefully) and a .txt file containing the image and text representations of the tree. 
 
 Tree modification:
 - fileinput.py will read in the training data and test data to create a list of lists with all attributes.
